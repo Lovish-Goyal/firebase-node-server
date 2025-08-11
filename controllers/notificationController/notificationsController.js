@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../serviceAccountKey.json');
+const serviceAccount = require('../../serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -119,7 +119,6 @@ const sendToAny = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-
 
 module.exports = {
   sendToAll,

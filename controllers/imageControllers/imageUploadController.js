@@ -21,8 +21,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// upload user profile image to server
-const uploadImage = (req, res) => {
+// upload single image to server
+
+const uploadSingleImage = (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No image file uploaded' });
   }
@@ -35,7 +36,29 @@ const uploadImage = (req, res) => {
   });
 };
 
+// upload many images to server
+
+const uploadManyImages = (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: 'No images uploaded' });
+  }
+
+  if(req.files.length > 4) {
+    return res.status(400).json({error: 'Limit Exceed than 5'})
+  }
+
+  const imageUrls = req.files.map(file => {
+    return `${req.protocol}://${req.get('host')}/images/${file.filename}`;
+  });
+
+  res.status(200).json({
+    message: 'Images uploaded successfully',
+    imageUrls
+  });
+};
+
 module.exports = {
-  upload: upload.single('image'),
-  uploadImage
+  upload,
+  uploadSingleImage,
+  uploadManyImages
 };

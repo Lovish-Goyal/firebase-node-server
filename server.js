@@ -2,16 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-const {router} = require('./routes/routes');
+const {mainRouter} = require('./routes/mainRoutes');
 
 app.use(bodyParser.json({limit: '100mb'}));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use('/api', router);
+app.use('/api', mainRouter);
 
 app.get('/', (req, res) => {
-  res.send('CodroidHive Server is Running');
+  res.send('Server is Running');
 });
 
 // Start the server
